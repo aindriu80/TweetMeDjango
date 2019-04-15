@@ -8,6 +8,11 @@
 </head>
 <body>
     <p>tweets/list_view.html</p>
-    {{ object_list}}
+    {% for object in object_list %}
+        {{ object.content }}<br/>
+        {{ object.user }}<br/>
+        {{ object.timestamp }}<br/>
+        {{ object.timestamp|timesince }}    <br/><br/>
+    {% endfor %}
 </body>
 </html>
