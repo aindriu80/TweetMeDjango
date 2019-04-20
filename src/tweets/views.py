@@ -1,11 +1,22 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
+
+from .forms import TweetModelForm
 from .models import Tweet
 
 # Create your views here.
 
 
-#Create 
+# Create 
+
+class TweetCreateView(CreateView):    
+    form_class = TweetModelForm
+    template_name = 'tweets/create_view.html'    
+    success_url = "/tweet/create/"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TweetCreateView,self).form_valid(form)
 
 # Retrieve
 
@@ -13,7 +24,7 @@ from .models import Tweet
 
 # Delete
 
-#List / Search
+# List / Search
 
 # Retrieve
 
