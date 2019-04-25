@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +9,14 @@
 </head>
 <body>
     <p>tweets/list_view.html</p>
-    {% for object in object_list %}
-        {{ object.content }}<br/>
-        {{ object.user }}<br/>
-        {{ object.timestamp }}<br/>
-        {{ object.timestamp|timesince }}    <br/><br/>
-    {% endfor %}
+    {% block content %}
+        {% for object in object_list %}
+            {{ object.content }}<br/>
+            {{ object.user }}<br/>
+            {{ object.timestamp }}<br/>
+            {{ object.timestamp|timesince }}    <br/><br/>
+        {% endfor %}
+    {% endblock content %}
+
 </body>
 </html>
