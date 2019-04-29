@@ -2,10 +2,12 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col-sm-3 col-xs-12" style="background-color:blue;">
-        <h2>{{ request.user}}</h2>
-        
+<div class='row'>
+    <div class='col-sm-3 col-xs-12' >
+    <h1>{{ request.user }}</h1>
+    <hr/>
+     <br/>
+     
     </div>
     <div class="col-sm-9">
             {% if not request.GET.q %}
