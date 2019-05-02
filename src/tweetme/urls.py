@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TweetListView.as_view(), name='home'),
     url(r'^tweet/', include(('tweets.url', 'tweet'),namespace='tweet')),
-    url(r'^api/tweet/', include(('tweets.api.url', 'tweet'),namespace='tweet-api')),
+    url(r'^api/tweet/', include('tweets.api.urls', namespace='tweet-api')),
 ]
 
 
