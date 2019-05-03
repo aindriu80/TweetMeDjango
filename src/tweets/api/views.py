@@ -1,5 +1,6 @@
 from rest_framework import generics
 
+
 from tweets.models import Tweet
 
 from .serializers import TweetModelSerializer
