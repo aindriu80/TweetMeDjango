@@ -1,5 +1,27 @@
 {% extends "base.html" %}
 
+{% block script %}
+<script>
+$(document).ready(function(){
+    console.log("working");
+
+    $.ajax({
+        url: "/api/tweet/",
+        method:"GET",
+        success: function(data){
+            console.log(data)
+        },
+        error: function(data){
+            console.log("error")
+            console.log(data)
+        }               
+        });
+
+});
+</script>
+{% endblock script %}
+
+
 {% block content %}
 
 <div class='row'>
