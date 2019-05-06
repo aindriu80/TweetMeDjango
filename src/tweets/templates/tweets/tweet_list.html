@@ -18,7 +18,7 @@ function getParameterByName(name, url) {
 }
 
 $(document).ready(function(){
-    console.log("working");
+    
 
     var query = getParameterByName('q');
     var tweetList = [];
@@ -41,7 +41,9 @@ $(document).ready(function(){
         }
     }
 
-    $.ajax({
+    function fetchTweets(){
+        console.log("fetching");
+        $.ajax({
         url: "/api/tweet/",
         data: {
             "q": query
@@ -58,6 +60,17 @@ $(document).ready(function(){
             console.log(data)
         }               
         });
+    }
+    
+    fetchTweets();
+    
+        $("#tweet-form").submit(function(event){
+            event.preventDefault()
+            var this_ = $(this)
+            console.log(event)
+            console.log(this_)
+            fetchTweets();
+        })
 
 });
 </script>
@@ -78,7 +91,7 @@ $(document).ready(function(){
             {% if not request.GET.q %}
             <div class="">
 
-            {% include "tweets/form.html" with form=create_form action_url=create_url btn_title="Tweet" %}
+            {% include "tweets/form.html" with form=create_form action_url=create_url btn_title="Tweet" form_id='tweet-form' %}
 
             </div>
             <hr />
