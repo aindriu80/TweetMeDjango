@@ -23,21 +23,30 @@ $(document).ready(function(){
     var query = getParameterByName('q');
     var tweetList = [];
 
+    function attachTweet(tweetValue, preprend){
+        
+                var tweetContent = tweetValue.content;
+                var tweetUser = tweetValue.user;
+                var dateDisplay = tweetValue.date_display;
+                var tweetFormattedHTML =  "<div class=\"media\"><div class=\"media-body\">"+ tweetContent + "<br/> via " + tweetUser.
+                    username + " | " + dateDisplay + " | " + "<a href='#'>View</a>" + " </div></div><hr/>"
+
+                if (preprend == true){
+                    $("#tweet-container").prepend(tweetFormattedHTML)
+                } else {
+                    $("#tweet-container").append(tweetFormattedHTML)
+                }
+                
+    }
+
     function parseTweets(){
         if (tweetList == 0) {
             $("#tweet-container").text("No current tweets")
-
         }else{
             // tweets exist, parse & display them
         $.each(tweetList, function(key, value){
-                var tweetKey = key;                
-                var tweetContent = value.content;
-                var tweetUser = value.user;
-                var dateDisplay = value.date_display;
-                $("#tweet-container").append(
-                    "<div class=\"media\"><div class=\"media-body\">"+ tweetContent + "<br/> via " + tweetUser.
-                    username + " | " + dateDisplay + " | " + "<a href='#'>View</a>" + " </div></div><hr/>"
-                )
+            var tweetKey = key;       
+            attachTweet(value) 
             })
         }
     }
@@ -75,8 +84,10 @@ $(document).ready(function(){
             data: formData,
             method:"POST",
             success: function(data){
-                console.log(data)
-                fetchTweets();
+                attachTweet(data, true)
+
+                // console.log(data)
+                // fetchTweets();
                 // tweetList = data
                 // parseTweets()
             
