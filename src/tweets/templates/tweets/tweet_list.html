@@ -84,6 +84,7 @@ $(document).ready(function(){
             data: formData,
             method:"POST",
             success: function(data){
+                this_.find("input[type=text], textarea").val("")
                 attachTweet(data, true)
 
                 // console.log(data)
