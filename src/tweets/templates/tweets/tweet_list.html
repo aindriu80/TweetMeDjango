@@ -18,25 +18,21 @@ function getParameterByName(name, url) {
 }
 
 $(document).ready(function(){
-    
-
     var query = getParameterByName('q');
     var tweetList = [];
+    var nextTweetUrl;
 
-    function attachTweet(tweetValue, preprend){
-        
+    function attachTweet(tweetValue, preprend){        
                 var tweetContent = tweetValue.content;
                 var tweetUser = tweetValue.user;
                 var dateDisplay = tweetValue.date_display;
                 var tweetFormattedHTML =  "<div class=\"media\"><div class=\"media-body\">"+ tweetContent + "<br/> via " + tweetUser.
                     username + " | " + dateDisplay + " | " + "<a href='#'>View</a>" + " </div></div><hr/>"
-
                 if (preprend == true){
                     $("#tweet-container").prepend(tweetFormattedHTML)
                 } else {
                     $("#tweet-container").append(tweetFormattedHTML)
-                }
-                
+                }                
     }
 
     function parseTweets(){
@@ -51,17 +47,28 @@ $(document).ready(function(){
         }
     }
 
-    function fetchTweets(){
+    function fetchTweets(url){
         console.log("fetching");
+        var fetchUrl;
+        if(!url){
+            fetchUrl = "/api/tweet/"
+        }else{
+            fetchUrl = url
+        }
         $.ajax({
-        url: "/api/tweet/",
+        url: fetchUrl,
         data: {
             "q": query
         },
         method:"GET",
         success: function(data){
             // console.log(data)
-            tweetList = data
+            tweetList = data.results            
+            if (data.next){
+            nextTweetUrl = data.next
+            }else{
+                $("#loadmore").css("display", "none")
+            }
             parseTweets()
            
         },
@@ -73,6 +80,15 @@ $(document).ready(function(){
     }
     
     fetchTweets();
+
+
+    $("#loadmore").click(function(event){
+        event.preventDefault()
+        if(nextTweetUrl){
+            fetchTweets(nextTweetUrl)
+        }
+        // load more items
+    })
 
     var charsStart = 140;
     var charsCurrent = 0;
@@ -152,6 +168,7 @@ $(document).ready(function(){
             <div class="">
 
             {% include "tweets/form.html" with form=create_form action_url=create_url btn_title="Tweet" form_id='tweet-form' %}
+            
 
             </div>
             <hr />
@@ -160,7 +177,7 @@ $(document).ready(function(){
             <div id="tweet-container">
 
             </div>
-
+            <a href='#' id='loadmore'>load more tweets</a>
          
 
     </div>

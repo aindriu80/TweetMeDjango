@@ -37,10 +37,33 @@
     
     <script>
       $(document).ready(function(){
-        $("#navbar-search-form input[type=text").keyup(function(event){
-          var searchQuery = $(this).val()
-          console.log(searchQuery)
+        var typingTimer;
+        var doneInterval = 500; // in ms
+        var searchInput =   $("#navbar-search-form input[type=text")
+        var searchQuery;
+
+        searchInput.keyup(function(event){
+          searchQuery = $(this).val()
+          
+          clearTimeout(typingTimer)
+          typingTimer = setTimeout(doneSearchTyping, doneInterval)
+
         })
+
+        searchInput.keydown(function(event){          
+          // console.log(searchQuery)
+          clearTimeout(typingTimer)
+        })
+
+        function doneSearchTyping(){
+          if (searchQuery){
+            // do search
+            var url = '/tweet/search/?q=' + searchQuery
+            document.location.href = url;
+          }
+        }
+
+
       })
     </script>
 
