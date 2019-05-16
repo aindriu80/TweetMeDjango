@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 
-class UserProfileManager(models.Manager):
+class UserProfileManager(models.Manager):    
     def all(self):
         qs = self.get_queryset().all()
         print(dir(self))
@@ -26,4 +26,8 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return str(self.following.all().count())
+    
+    def get_following(self):
+        users = self.following.all() # User.objects.all().exclude(username=slef.user.username)
+        return users.exclude(username=self.user.username)
           
