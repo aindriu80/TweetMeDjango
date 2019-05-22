@@ -27,6 +27,7 @@ $(document).ready(function(){
             var hashtagRegex = /(^|\s)#([\w\d-]+)/g
             var newText = $(this).html().replace(hashtagRegex, "$1<a href='/tags/$2/'>#$2</a>")
             $(this).html(newText)
+            // create hashtag here 
         })
     }
 
