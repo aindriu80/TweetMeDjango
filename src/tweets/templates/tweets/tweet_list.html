@@ -33,10 +33,12 @@ $(document).ready(function(){
 
     function attachTweet(tweetValue, preprend){        
                 var tweetContent = tweetValue.content;
+                var dateDisplay = tweetValue.date_display;                
                 var tweetUser = tweetValue.user;
-                var dateDisplay = tweetValue.date_display;
-                var tweetFormattedHTML =  "<div class=\"media\"><div class=\"media-body\">"+ tweetContent + "<br/> via <a href='"+ tweetUser.url + "'>"  + tweetUser.
-                    username + "</a> | " + dateDisplay + " | " + "<a href='#'>View</a>" + " </div></div><hr/>"
+                var isRetweet = tweetValue.is_retweet;
+                var tweetFormattedHTML =  "<div class=\"media\">" + isRetweet + "<div class=\"media-body\">" +
+                tweetContent + "<br/> via <a href='"+ tweetUser.url + "'>"  + tweetUser.username + "</a> | " + 
+                dateDisplay + " | " + "<a href='/tweet/" + tweetValue.id + "'>View</a>" + " </div></div><hr/>"
                 if (preprend == true){
                     $("#tweet-container").prepend(tweetFormattedHTML)
                 } else {
