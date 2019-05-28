@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.utils import timezone
 
 # Create your models here.
+from hashtags.signals import parsed_hashtags
 from .validators import validate_content
 
 # model manager
@@ -62,20 +63,13 @@ def tweet_save_reciever(sender, instance, created, *args, **kwargs):
     if created and not instance.parent:
         # notify a user
         user_regex = r'@(?P<username>[\w.@+-]+)'
-        m = re.findall(user_regex, instance.content)
-        if m:
-            print(m)
-            # username = m.group("username")
-            # print(username)
-            # send notification to user here.
+        usernames = re.findall(user_regex, instance.content)
+        # send notification to user here.
 
         hash_regex = r'#(?P<hashtag>[\w\d-]+)'
-        h_m = re.findall(hash_regex, instance.content)
-        if h_m:
-            print(h_m)
-            # hashtag = m.group("hashtag")
-            # print(hashtag)
-            # send hashtag signal to user here.
+        hashtags = re.findall(hash_regex, instance.content)
+        parsed_hashtags.send(sender=instance.__class__, hashtag_list=hashtags)
+        # send hashtag signal to user here.
 
 
 
