@@ -9,6 +9,11 @@ from tweets.models import Tweet
 from .pagination import StandardResultsPagination
 from .serializers import TweetModelSerializer
 
+def get_serializer_context(self):
+    context = super(TweetCreateAPIView, self).get_serializer_context(*args, **kwargs)
+    context['request'] = self.request
+    return context
+
 class LikeToggleAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, pk, format=None):
