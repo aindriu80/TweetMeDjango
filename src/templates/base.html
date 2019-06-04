@@ -244,7 +244,7 @@ function loadTweetContainer(tweetContainerID, fetchOneId){
             method:"GET",
             success: function(data){
             console.log(data)
-            tweetList = [data]
+            tweetList = data.results
             // if (data.next){
             // nextTweetUrl = data.next
             // }else{
