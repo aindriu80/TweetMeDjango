@@ -58,8 +58,8 @@ class TweetDetailAPIView(generics.ListAPIView):
         if qs.exists() and qs.count() == 1:
             parent_obj = qs.first()
             qs1 = parent_obj.get_children()
-            qs = (qs | qs1).distinct()
-        return qs
+            qs = (qs | qs1).distinct().extra(select={"parent_id_null": "parent_id IS NULL"})
+        return qs.order_by("-parent_id_null", '-timestamp')
 
     
 
