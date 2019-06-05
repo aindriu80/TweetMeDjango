@@ -55,6 +55,10 @@ class TweetDetailAPIView(generics.ListAPIView):
     def get_queryset(self,*args, **kwargs):
         tweet_id = self.kwargs.get("pk")
         qs = Tweet.objects.filter(pk=tweet_id)
+        if qs.exists() and qs.count() == 1:
+            parent_obj = qs.first()
+            qs1 = parent_obj.get_children()
+            qs = (qs | qs1).distinct()
         return qs
 
     
