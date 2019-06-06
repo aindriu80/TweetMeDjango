@@ -70,13 +70,15 @@ class TweetModelSerializer(serializers.ModelSerializer):
         ]
         # read_only_fields =['reply']
         
-    # def get_did_like(self, obj):
-    #     request = self.context.get("request")
-    #     user = request.user
-    #     if user.is_authenticated:
-    #         if user in obj.liked.all():
-    #             return True
-    #         return False
+    def get_did_like(self, obj):
+        try:
+            user = request.user
+            if user.is_authenticated():
+                if user in obj.liked.all():
+                    return True
+        except:
+            pass
+        return False        
 
     def get_did_like(self, obj):
         request = self.context.get("request")
