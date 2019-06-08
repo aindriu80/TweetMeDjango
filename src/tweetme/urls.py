@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
+from hashtags.api.views import TagTweetAPIView
 from hashtags.views import HashTagView
 from tweets.api.views import SearchTweetAPIView
 from tweets.views import TweetListView
@@ -31,8 +32,9 @@ urlpatterns = [
     url(r'^search/$', SearchView.as_view(), name='search'),
     url(r'^api/search/$', SearchTweetAPIView.as_view(), name='search-api'),
     url(r'^tags/(?P<hashtag>.*)/$', HashTagView.as_view(), name='hashtag'),
-    url(r'^tweet/', include(('tweets.url', 'tweet'), namespace='tweet')),
-
+    url(r'^tweet/', include(('tweets.url', 'tweet'), namespace='tweet')),    
+    url(r'^api/tags/(?P<hashtag>.*)/$', TagTweetAPIView.as_view(), name='tag-tweet-api'),
+    url(r'^api/search/$', SearchTweetAPIView.as_view(), name='search-api'),    
     url(r'^api/tweet/', include(('tweets.api.urls', 'api/tweet'), namespace='tweet-api')),
     url(r'^api/', include(('accounts.api.urls', 'api/tweet'), namespace='accounts-api')),
     url(r'^', include(('accounts.urls', 'profiles'), namespace='profiles')),
