@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+ 
 {% block script %}
 <script>
 
@@ -37,12 +38,8 @@ $(document).ready(function(){
         {% endfor %}
 
         <hr/>
-        <h2>Recommended Users to Follow</h2>
-        {% for profile in recommended %}
-        <a href='/{{ profile.user.username }}'>{{ profile.user.username }}</a></a></br>
-        {% empty %}
-        <h4>Not followed by any user</h4>
-        {% endfor %}
+        
+        
 
     </div>
         <div class="col-sm-9">   
@@ -52,12 +49,7 @@ $(document).ready(function(){
 
           </div>
           <a href='#' id='loadmore'>load more tweets</a>
-
-
-        
-          
-          
-         
+ 
         </div>        
 </div>
 {% endblock content %}  
