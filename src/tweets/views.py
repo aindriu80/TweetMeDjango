@@ -57,7 +57,7 @@ class TweetDetailView(DetailView):
     
     
 
-class TweetListView(ListView):
+class TweetListView(LoginRequiredMixin, ListView):
     # template_name = "tweets/list_view.html"
     
     def get_queryset(self, *args, **kwargs):
